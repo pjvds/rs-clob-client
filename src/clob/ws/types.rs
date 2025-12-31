@@ -312,6 +312,9 @@ pub struct SubscriptionRequest {
     /// Request initial state dump
     #[serde(skip_serializing_if = "Option::is_none")]
     pub initial_dump: Option<bool>,
+    /// Enable custom features like last_trade_price updates
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub custom_feature_enabled: Option<bool>,
     /// Authentication credentials
     #[serde(skip)]
     pub auth: Option<Credentials>,
@@ -326,6 +329,7 @@ impl SubscriptionRequest {
             markets: vec![],
             asset_ids,
             initial_dump: Some(true),
+            custom_feature_enabled: Some(true),
             auth: None,
         }
     }
@@ -338,6 +342,7 @@ impl SubscriptionRequest {
             markets,
             asset_ids: vec![],
             initial_dump: Some(true),
+            custom_feature_enabled: None,
             auth: Some(auth),
         }
     }
