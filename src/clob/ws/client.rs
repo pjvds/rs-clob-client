@@ -207,6 +207,15 @@ impl<S: State> WebSocketClient<S> {
         })
     }
 
+    /// Subscribe to all market messages for specific assets.
+    /// This includes orderbook updates, last trade prices, tick size changes, etc.
+    pub fn subscribe_market(
+        &self,
+        asset_ids: Vec<String>,
+    ) -> Result<impl Stream<Item = Result<WsMessage>>> {
+        self.market_handles()?.subscriptions.subscribe_market(asset_ids)
+    }
+
     /// Get the current connection state.
     pub async fn connection_state(&self) -> ConnectionState {
         if let Some(handles) = self.inner.channel(ChannelType::Market) {
